@@ -1,0 +1,627 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700&display=swap');
+
+:root {
+  --bg:      #08080f;
+  --panel:   #12121f;
+  --border:  #2a2a45;
+  --gold:    #d4af37;
+  --ash:     #8a8a9a;
+  --light:   #e8e4d9;
+  --red:     #c0392b;
+  --green:   #5dbd73;
+  --blue:    #4a9fd4;
+  --orange:  #d4893a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--light);
+  font-family: 'Cinzel', serif;
+  min-height: 100vh;
+}
+
+#app { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+/* ── HEADER ── */
+header {
+  text-align: center;
+  padding: 16px 0 8px;
+  border-bottom: 1px solid #d4af3730;
+  margin-bottom: 16px;
+}
+header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(18px, 4vw, 28px);
+  color: var(--gold);
+  letter-spacing: 4px;
+}
+header p {
+  font-size: 11px;
+  color: var(--ash);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── NAV ── */
+nav { display: flex; justify-content: center; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; }
+.nav-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; letter-spacing: 2px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #d4af3740;
+  color: var(--ash);
+  cursor: pointer; text-transform: uppercase;
+  transition: all .2s;
+}
+.nav-btn:hover, .nav-btn.active {
+  border-color: var(--gold); color: var(--gold);
+  background: #d4af3710;
+}
+
+/* ── VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
+.hidden { display: none !important; }
+
+/* ══════════════════════════════
+   PAGE BACKGROUND VIDEO (for views except study)
+══════════════════════════════ */
+#page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #000;
+}
+#page-bg video,
+#page-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ══════════════════════════════
+   MAIN MENU (view-inicio)
+══════════════════════════════ */
+#view-inicio {
+  display: none;
+  min-height: 60vh;
+}
+#view-inicio.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-center {
+  text-align: center;
+  padding: 40px 20px;
+}
+.menu-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(28px, 6vw, 48px);
+  color: var(--gold);
+  letter-spacing: 6px;
+  margin-bottom: 8px;
+}
+.menu-subtitle {
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.menu-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  padding: 16px 48px;
+  width: 100%;
+  max-width: 320px;
+  background: #12121fe0;
+  border: 1px solid #d4af3740;
+  color: var(--light);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all .3s;
+}
+.menu-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: #d4af3720;
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════
+   DECK CREATOR (view-mazos)
+══════════════════════════════ */
+#deck-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.deck-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.deck-card-info h3 {
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.deck-card-info p {
+  font-size: 11px;
+  color: var(--ash);
+}
+.deck-card-actions {
+  display: flex;
+  gap: 6px;
+}
+.deck-card-actions button {
+  padding: 6px 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 1px solid;
+  text-transform: uppercase;
+  transition: all .2s;
+}
+.deck-reset-btn {
+  background: #0a1a0a;
+  border-color: var(--green);
+  color: var(--green);
+}
+.deck-reset-btn:hover { background: #0a2a0a; }
+.deck-select-btn {
+  background: #d4af3715;
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.deck-select-btn:hover { background: #d4af3730; }
+.deck-del-btn {
+  background: #1a0505;
+  border-color: var(--red);
+  color: #e87777;
+}
+.deck-del-btn:hover { background: #2a0505; }
+.deck-card.active {
+  border-color: var(--gold);
+}
+
+/* ── Deck filter dropdown ── */
+#deck-filter {
+  margin-bottom: 12px;
+}
+#deck-filter-select,
+#card-deck-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0a0a14;
+  border: 1px solid var(--border);
+  color: var(--light);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+#deck-filter-select:focus,
+#card-deck-select:focus {
+  border-color: var(--gold);
+}
+#deck-filter-select option,
+#card-deck-select option {
+  background: #12121f;
+  color: var(--light);
+}
+
+/* ══════════════════════════════
+   BATTLE ARENA
+══════════════════════════════ */
+#battle-arena {
+  position: relative;
+  background: #000;
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+#combat-media {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+#combat-media video,
+#combat-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+#combat-text,
+#round-info {
+  position: relative;
+  z-index: 1;
+}
+
+#combat-text {
+  position: absolute;
+  top: 16px; left: 0; right: 0;
+  text-align: center;
+  font-size: clamp(16px, 4vw, 24px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #000;
+  pointer-events: none;
+  animation: floatUp 1.2s ease forwards;
+}
+@keyframes floatUp {
+  0%   { opacity: 1; transform: translateY(0); }
+  70%  { opacity: 1; transform: translateY(-30px); }
+  100% { opacity: 0; transform: translateY(-50px); }
+}
+
+#round-info {
+  position: absolute;
+  bottom: 8px; left: 0; right: 0;
+  display: flex; justify-content: space-around;
+  font-size: 10px; letter-spacing: 1px;
+  color: #b8860b; text-transform: uppercase;
+  text-shadow: 0 0 6px #000;
+}
+
+/* ── EMPTY STATE ── */
+#empty-msg {
+  text-align: center; padding: 50px 20px;
+  border: 1px solid #d4af3720; background: var(--panel);
+  margin-bottom: 12px;
+}
+#empty-msg h2 { color: var(--gold); font-size: 18px; margin-bottom: 12px; }
+#empty-msg p  { color: var(--ash); font-size: 13px; line-height: 2; }
+
+/* ══════════════════════════════
+   FLASHCARD (above arena, normal flow)
+══════════════════════════════ */
+#flashcard {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  min-height: 110px;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 24px; text-align: center;
+  cursor: pointer;
+  transition: border-color .3s;
+  margin-bottom: 10px;
+}
+
+#card-section {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-top: 10px;
+}
+#flashcard.revealed { border-color: #d4af3780; }
+#flashcard.flash-correct { animation: flashGreen .4s ease; }
+#flashcard.flash-wrong   { animation: flashRed   .4s ease; }
+@keyframes flashGreen { 50% { background: #0a2a10; border-color: var(--green); } }
+@keyframes flashRed   { 50% { background: #2a0a0a; border-color: var(--red); } }
+
+#card-label {
+  position: absolute; top: 10px; left: 14px;
+  font-size: 9px; letter-spacing: 3px;
+  color: var(--ash); text-transform: uppercase;
+}
+#card-text { font-size: clamp(18px, 3vw, 24px); line-height: 1.5; }
+#card-subtext { font-size: 13px; color: var(--ash); margin-top: 8px; font-style: italic; }
+
+/* ── REVEAL BUTTON (full width) ── */
+#reveal-btn {
+  width: 100%; padding: 14px 20px;
+  background: #d4af3715; border: 1px solid var(--gold);
+  color: var(--gold); font-family: 'Cinzel', serif;
+  font-size: 13px; letter-spacing: 3px;
+  cursor: pointer; transition: all .2s; text-transform: uppercase;
+}
+#reveal-btn:hover { background: #d4af3730; }
+
+/* ── RATING BUTTONS ── */
+#rating-section { display: flex; flex-direction: column; gap: 8px; }
+#rating-label {
+  text-align: center; font-size: 10px;
+  letter-spacing: 3px; color: var(--ash); text-transform: uppercase;
+}
+#rating-btns { display: flex; gap: 6px; }
+.rate-btn {
+  flex: 1; padding: 12px 6px;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px;
+  cursor: pointer; border: 1px solid;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: transform .15s;
+  text-transform: uppercase;
+}
+.rate-btn:hover { transform: translateY(-2px); }
+.rate-btn .icon { font-size: 16px; }
+.rate-btn .sub { font-size: 8px; opacity: .7; letter-spacing: 0; text-transform: none; }
+
+.btn-again { background: #1a0505; border-color: var(--red); color: #e87777; }
+.btn-hard  { background: #1a0e00; border-color: var(--orange); color: var(--orange); }
+.btn-hide  { background: #0a0a14; border-color: var(--ash); color: var(--ash); }
+.btn-good  { background: #051a08; border-color: var(--green); color: var(--green); }
+.btn-easy  { background: #050d1a; border-color: var(--blue); color: var(--blue); }
+
+/* ══════════════════════════════
+   DECK / FORM
+══════════════════════════════ */
+.section-title {
+  font-size: 11px; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase;
+  padding-bottom: 8px; margin: 16px 0 10px;
+  border-bottom: 1px solid #d4af3730;
+}
+.section-title:first-child { margin-top: 0; }
+
+.form-panel {
+  background: var(--panel); border: 1px solid var(--border);
+  padding: 14px; display: flex; flex-direction: column; gap: 10px;
+}
+.form-row { display: flex; gap: 10px; align-items: flex-start; }
+.form-row label {
+  font-size: 9px; letter-spacing: 2px; color: var(--ash);
+  text-transform: uppercase; min-width: 55px; padding-top: 12px;
+}
+textarea {
+  flex: 1; padding: 10px 14px;
+  background: #0a0a14; border: 1px solid var(--border);
+  color: var(--light); font-family: 'Cinzel', serif; font-size: 15px;
+  outline: none; resize: vertical;
+}
+textarea:focus { border-color: var(--gold); }
+.primary-btn { align-self: flex-end; padding: 12px 24px; }
+.btn-transparent {
+  background: transparent;
+  border: 1px solid #d4af3750;
+  color: var(--ash);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  transition: all .2s;
+  width: 100%;
+}
+.btn-transparent:hover { border-color: var(--gold); color: var(--gold); }
+
+#import-zone {
+  border: 1px dashed #d4af3730; padding: 24px; text-align: center;
+  cursor: pointer; background: #0a0a14;
+  font-size: 12px; color: var(--ash); line-height: 2; transition: all .2s;
+}
+#import-zone:hover, #import-zone.drag-over { border-color: var(--gold); color: var(--gold); }
+#import-zone small { font-size: 10px; opacity: .7; }
+
+#card-list { background: #0a0a14; border: 1px solid var(--border); max-height: 280px; overflow-y: auto; }
+.card-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; border-bottom: 1px solid #d4af3710; font-size: 14px;
+}
+.card-row:last-child { border-bottom: none; }
+.card-row-back { color: var(--ash); font-size: 12px; font-style: italic; }
+.card-del {
+  background: none; border: none; color: var(--red); cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px;
+}
+.empty-deck { padding: 30px; text-align: center; color: var(--ash); font-size: 11px; letter-spacing: 2px; line-height: 2.5; }
+
+/* ══════════════════════════════
+   MODS VIEW
+══════════════════════════════ */
+.hint-text { font-size: 12px; color: var(--ash); line-height: 1.8; margin-bottom: 12px; }
+.hint-text code { color: var(--gold); background: #d4af3710; padding: 2px 5px; }
+
+/* ══════════════════════════════
+   STATS
+══════════════════════════════ */
+.stats-panel { background: var(--panel); border: 1px solid var(--border); padding: 16px; }
+.stat-row {
+  display: flex; justify-content: space-between; padding: 10px 0;
+  border-bottom: 1px solid #d4af3710; font-size: 14px;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row span:first-child { color: var(--ash); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.stat-row span:last-child { color: var(--gold); }
+
+.danger-btn {
+  margin-top: 16px; padding: 10px 20px;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px;
+  background: none; border: 1px solid var(--red); color: #e87777;
+  cursor: pointer; text-transform: uppercase;
+}
+
+/* ══════════════════════════════
+   CINEMATIC OVERLAY
+══════════════════════════════ */
+#cinematic {
+  position: fixed; inset: 0; z-index: 999;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  animation: cinematicFadeIn 0.8s ease forwards;
+}
+
+@keyframes cinematicFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+#cinematic-video, #cinematic-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  animation: cinematicZoom 1.2s ease forwards;
+}
+
+@keyframes cinematicZoom {
+  0% { transform: scale(1.08); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+#cinematic-score, #cinematic-title, #cinematic-subtitle {
+  position: absolute; left: 0; right: 0; text-align: center;
+  opacity: 0; transition: opacity 1s; pointer-events: none;
+  text-shadow: 0 2px 10px #000;
+}
+#cinematic-score    { top: 30px; font-size: 13px; letter-spacing: 3px; color: var(--ash); text-transform: uppercase; }
+#cinematic-title    { bottom: 80px; font-size: clamp(16px,3vw,26px); letter-spacing: 4px; color: var(--gold); font-family: 'Cinzel Decorative', serif; padding: 0 20px; }
+#cinematic-subtitle { bottom: 44px; font-size: clamp(11px,2vw,14px); letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+
+#cinematic-skip {
+  position: absolute; bottom: 10px; right: 16px; z-index: 10;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px;
+  color: #ffffff40; cursor: pointer; border: none; background: none; transition: color .2s;
+}
+#cinematic-skip:hover { color: #ffffff90; }
+
+/* ══════════════════════════════
+   REPASO OVERLAY (post-battle)
+══════════════════════════════ */
+#repaso {
+  position: fixed; inset: 0; z-index: 900;
+  display: flex; justify-content: center; align-items: center;
+  background: rgba(0,0,0,.85);
+}
+#repaso-box {
+  background: var(--panel); border: 1px solid var(--gold);
+  padding: 32px 28px; text-align: center;
+  max-width: 380px; width: 90%;
+}
+#repaso-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(16px,3vw,22px); letter-spacing: 3px;
+  color: var(--gold); margin-bottom: 8px;
+}
+#repaso-score {
+  font-size: 12px; letter-spacing: 2px;
+  color: var(--ash); margin-bottom: 20px;
+}
+#repaso-btns {
+  display: flex; flex-direction: column; gap: 10px;
+}
+#repaso-btns button {
+  width: 100%; padding: 14px; font-family: 'Cinzel', serif;
+  font-size: 12px; letter-spacing: 2px;
+  cursor: pointer; border: 1px solid var(--gold);
+  background: #d4af3715; color: var(--gold);
+  text-transform: uppercase; transition: all .2s;
+}
+#repaso-btns button:hover { background: #d4af3730; }
+#repaso-btns button:last-child {
+  border-color: var(--red); color: var(--red); background: #1a0a0a15;
+}
+#repaso-btns button:last-child:hover { background: #1a0a0a30; }
+
+/* ── Empty / Repaso state ── */
+#empty-msg { text-align: center; padding: 40px 20px; }
+#empty-msg h2 { font-family: 'Cinzel Decorative', serif; font-size: clamp(16px,3vw,22px); letter-spacing: 3px; color: var(--gold); margin-bottom: 10px; }
+#empty-msg p  { font-size: 12px; letter-spacing: 2px; color: var(--ash); line-height: 1.6; }
+#empty-repaso-btns { display: flex; flex-direction: column; gap: 10px; max-width: 300px; margin: 16px auto 0; }
+#empty-repaso-btns .repaso-btn {
+  width: 100%; padding: 14px; font-family: 'Cinzel', serif;
+  font-size: 12px; letter-spacing: 2px;
+  cursor: pointer; border: 1px solid var(--gold);
+  background: #d4af3715; color: var(--gold);
+  text-transform: uppercase; transition: all .2s;
+}
+#empty-repaso-btns .repaso-btn:hover { background: #d4af3730; }
+.gold-text { color: var(--gold) !important; font-style: italic; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  padding: 10px 24px; background: var(--panel); border: 1px solid var(--gold);
+  color: var(--gold); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
+  opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 1000;
+  text-transform: uppercase;
+}
+#toast.show { opacity: 1; }
+
+@media (max-width: 768px) and (orientation: portrait) {
+  #app { padding: 4px 6px; }
+  header { margin-bottom: 4px; padding: 8px 0 4px; }
+  header h1 { font-size: clamp(12px, 3vw, 16px); letter-spacing: 1px; }
+  nav { gap: 2px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start; margin-bottom: 6px; }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn { font-size: 8px; padding: 4px 8px; white-space: nowrap; letter-spacing: 1px; flex-shrink: 0; }
+  #battle-arena { aspect-ratio: 4 / 3; max-height: 35vh; }
+  #flashcard { min-height: 50px; padding: 8px 12px; margin-bottom: 4px; }
+  #flashcard #card-text { font-size: clamp(12px, 2.5vw, 15px); }
+  #flashcard #card-subtext { font-size: 10px; }
+  #flashcard #card-label { font-size: 7px; top: 4px; left: 8px; }
+  #round-info { font-size: 7px; bottom: 2px; }
+  #rating-section { gap: 4px; }
+  #rating-label { font-size: 8px; }
+  .rate-btn { padding: 4px 2px; font-size: 7px; letter-spacing: 0; gap: 1px; }
+  .rate-btn .icon { font-size: 11px; }
+  .rate-btn .sub { font-size: 6px; }
+  #rating-btns { gap: 2px; }
+  #reveal-btn { padding: 6px 10px; font-size: 9px; }
+  #card-section { gap: 3px; margin-top: 4px; }
+  #hide-btn { display: none; }
+  .menu-title { font-size: clamp(18px, 5vw, 26px); letter-spacing: 2px; }
+  .menu-subtitle { font-size: 10px; margin-bottom: 16px; }
+  .menu-btn { padding: 10px 20px; font-size: 11px; max-width: 220px; }
+  .menu-center { padding: 16px 12px; }
+  .form-row { flex-direction: column; gap: 3px; }
+  .form-row label { min-width: auto; padding-top: 0; font-size: 8px; }
+  textarea { font-size: 12px; padding: 8px 10px; }
+  .section-title { font-size: 9px; letter-spacing: 1px; margin: 8px 0 6px; }
+  .primary-btn { padding: 8px 16px; font-size: 10px; }
+  .deck-card { flex-direction: column; gap: 6px; align-items: stretch; padding: 8px; }
+  .deck-card-actions { justify-content: flex-end; }
+  .deck-card-info h3 { font-size: 12px; }
+  .deck-card-info p { font-size: 9px; }
+  #card-list { max-height: 150px; }
+  .card-row { font-size: 11px; padding: 6px 8px; flex-wrap: wrap; gap: 3px; }
+  .stats-panel { padding: 8px; }
+  .stat-row { font-size: 11px; padding: 6px 0; }
+  .stat-row span:first-child { font-size: 8px; }
+  #repaso-box { padding: 16px 12px; }
+  #empty-msg { padding: 16px 10px; }
+  #cinematic-title { bottom: 50px; font-size: clamp(13px, 2.5vw, 18px); }
+  #cinematic-subtitle { bottom: 28px; font-size: clamp(9px, 1.8vw, 12px); }
+  #cinematic-score { top: 16px; font-size: 10px; }
+  #cinematic-skip { font-size: 8px; bottom: 6px; right: 10px; }
+  #import-zone { padding: 12px; font-size: 10px; }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  #app { padding: 4px 8px; }
+  header { margin-bottom: 4px; padding: 6px 0 4px; }
+  header h1 { font-size: clamp(12px, 2.5vw, 16px); letter-spacing: 1px; }
+  nav { gap: 2px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start; margin-bottom: 4px; }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn { font-size: 8px; padding: 4px 8px; white-space: nowrap; flex-shrink: 0; }
+  #battle-arena { aspect-ratio: 16 / 9; max-height: 45vh; }
+  #flashcard { min-height: 50px; padding: 8px 12px; margin-bottom: 4px; }
+  #flashcard #card-text { font-size: clamp(11px, 2vw, 14px); }
+  #flashcard #card-subtext { font-size: 9px; }
+  #round-info { font-size: 7px; }
+  .rate-btn { padding: 4px 2px; font-size: 7px; letter-spacing: 0; gap: 1px; }
+  .rate-btn .icon { font-size: 11px; }
+  .rate-btn .sub { font-size: 6px; }
+  #rating-btns { gap: 2px; }
+  #reveal-btn { padding: 6px 10px; font-size: 9px; }
+  #card-section { gap: 3px; margin-top: 3px; }
+  #hide-btn { display: none; }
+  .menu-btn { padding: 8px 16px; font-size: 10px; max-width: 200px; }
+  #repaso-box { padding: 12px 16px; }
+}
