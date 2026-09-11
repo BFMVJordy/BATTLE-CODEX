@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex Battle</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<!-- ══════════ PAGE BACKGROUND (video for all views except study) ══════════ -->
+<div id="page-bg" class="hidden">
+  <video id="page-bg-video" muted loop playsinline></video>
+  <img id="page-bg-image" class="hidden">
+</div>
+
+<!-- ══════════ BACKGROUND MUSIC ══════════ -->
+<audio id="bgm-general" src="assets/default/audio/general.mp3" loop preload="auto"></audio>
+<audio id="bgm-combate" src="assets/default/audio/combate.mp3" loop preload="auto"></audio>
+
+<!-- ══════════ CINEMATIC OVERLAY (full screen) ══════════ -->
+<div id="cinematic" class="hidden">
+  <video id="cinematic-video" playsinline></video>
+  <img id="cinematic-image" class="hidden">
+  <div id="cinematic-score"></div>
+  <div id="cinematic-title"></div>
+  <div id="cinematic-subtitle"></div>
+  <button id="cinematic-skip">CONTINUAR ▶</button>
+</div>
+
+<!-- ══════════ REPASO OVERLAY (post-battle) ══════════ -->
+<div id="repaso" class="hidden">
+  <div id="repaso-box">
+    <div id="repaso-title">Combate finalizado</div>
+    <div id="repaso-score"></div>
+    <div id="repaso-btns">
+      <button id="repaso-all">⚔ Repasar todas</button>
+      <button id="repaso-wrong">🎯 Solo falladas</button>
+      <button id="repaso-end">← Volver al menú</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+
+  <header>
+    <h1 id="app-title">CODEX BATTLE</h1>
+
+  </header>
+
+  <nav>
+    <button class="nav-btn active" data-view="inicio">Inicio</button>
+    <button class="nav-btn" data-view="study">Combate</button>
+    <button class="nav-btn" data-view="mazos">Mazos</button>
+    <button class="nav-btn" data-view="deck">Cartas</button>
+    <button class="nav-btn" data-view="stats">Stats</button>
+  </nav>
+
+  <!-- ══════════ INICIO (main menu) ══════════ -->
+  <section id="view-inicio" class="view active">
+    <div class="menu-center">
+      <h1 class="menu-title">CODEX BATTLE</h1>
+      <p class="menu-subtitle">El conocimiento es poder</p>
+      <div class="menu-buttons">
+        <button class="menu-btn" data-view="study">⚔️ COMBATE</button>
+        <button class="menu-btn" data-view="mazos">📚 MAZOS</button>
+        <button class="menu-btn" data-view="deck">🃏 CARTAS</button>
+        <button class="menu-btn" data-view="stats">📊 ESTADÍSTICAS</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ STUDY / BATTLE VIEW ══════════ -->
+  <section id="view-study" class="view">
+
+    <!-- Flashcard (above the arena, normal flow) -->
+    <div id="flashcard">
+      <span id="card-label">PREGUNTA</span>
+      <div id="card-text"></div>
+      <div id="card-subtext"></div>
+    </div>
+
+    <div id="battle-arena">
+
+      <div id="combat-media">
+        <video id="combat-video" playsinline></video>
+        <img id="combat-image" class="hidden">
+      </div>
+
+      <!-- Floating combat text -->
+      <div id="combat-text" class="hidden"></div>
+
+      <!-- Top bar info -->
+      <div id="round-info">
+        <span>Pendientes: <span id="pending-count">0</span></span>
+        <span id="streak-display">🔥 Racha: <span id="streak-count">0</span></span>
+        <span>Respondidas: <span id="done-count">0</span></span>
+      </div>
+    </div>
+
+    <!-- No cards message / Post-session repaso -->
+    <div id="empty-msg" class="hidden">
+      <div id="empty-default">
+        <h2>— Sin Adversario —</h2>
+        <p>No hay cartas para repasar hoy.<br>Ve a "Cartas" para forjar nuevas.</p>
+      </div>
+      <div id="empty-repaso" class="hidden">
+        <h2>⚔ Combate finalizado</h2>
+        <p id="empty-repaso-score"></p>
+        <p id="empty-victory-msg" class="hidden gold-text"></p>
+        <div id="empty-repaso-btns">
+          <button class="repaso-btn" data-only="false">⚔ Repasar todas</button>
+          <button class="repaso-btn" data-only="true">🎯 Solo falladas</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button and rating (below the arena) -->
+    <div id="card-section">
+      <button id="reveal-btn" class="hidden">Revelar</button>
+
+      <div id="rating-section" class="hidden">
+        <div id="rating-label">¿Cómo respondiste?</div>
+        <div id="rating-btns">
+          <button class="rate-btn btn-again" data-rating="1">
+            <span class="icon">🔥</span>OTRA VEZ
+            <span class="sub">Baile del espectro</span>
+          </button>
+          <button class="rate-btn btn-hard" data-rating="2">
+            <span class="icon">🐉</span>DIFÍCIL
+            <span class="sub">Espada sangrienta</span>
+          </button>
+          <button class="rate-btn btn-hide" id="hide-btn">
+            <span class="icon">👁️</span>OCULTAR
+            <span class="sub">Volver a la pregunta</span>
+          </button>
+          <button class="rate-btn btn-good" data-rating="3">
+            <span class="icon">⚔️</span>BIEN
+            <span class="sub">Meteoro de pegaso</span>
+          </button>
+          <button class="rate-btn btn-easy" data-rating="4">
+            <span class="icon">💨</span>FÁCIL
+            <span class="sub">Cometa de pegaso</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ MAZOS (deck creator) ══════════ -->
+  <section id="view-mazos" class="view">
+    <div id="mazos-main">
+      <div class="section-title">Creador de Mazos</div>
+      <div class="form-panel">
+        <div class="form-row">
+          <label>Nombre</label>
+          <input type="text" id="new-deck-name" placeholder="Nombre del mazo...">
+        </div>
+        <button id="add-deck-btn" class="primary-btn">+ Crear Mazo</button>
+      </div>
+      <div class="section-title">Mis Mazos</div>
+      <div id="deck-list"></div>
+    </div>
+
+
+  </section>
+
+  <!-- ══════════ DECK MANAGER VIEW ══════════ -->
+  <section id="view-deck" class="view">
+    <div class="section-title">Agregar Carta</div>
+    <div class="form-panel">
+      <div class="form-row">
+        <label>Mazo</label>
+        <select id="card-deck-select"></select>
+      </div>
+      <div class="form-row">
+        <label>Frente</label>
+        <textarea id="new-front" rows="2" placeholder="Pregunta..."></textarea>
+      </div>
+      <div class="form-row">
+        <label>Dorso</label>
+        <textarea id="new-back" rows="2" placeholder="Respuesta..."></textarea>
+      </div>
+      <button id="add-card-btn" class="primary-btn">+ Agregar Carta</button>
+    </div>
+
+    <div class="section-title">Importar (.csv)</div>
+    <div id="import-zone">
+      <p>Arrastrá tu .csv aquí o hacé clic</p>
+      <small>Formato: pregunta,respuesta — una por línea</small>
+      <input type="file" id="file-input" accept=".csv,.txt" class="hidden">
+    </div>
+    <button id="import-btn" class="btn-transparent">📥 Añadir importación</button>
+
+    <div class="section-title">Seleccionar Mazo</div>
+    <div id="deck-filter">
+      <select id="deck-filter-select"></select>
+    </div>
+
+    <div class="section-title">Cartas del Mazo (<span id="card-count">0</span>)</div>
+    <div id="card-list"></div>
+    <button id="deck-cheer-btn" class="btn-transparent">⚔ Forja tu leyenda, ¡el duelo te espera!</button>
+  </section>
+
+  <!-- ══════════ STATS VIEW ══════════ -->
+  <section id="view-stats" class="view">
+    <div class="section-title">Crónicas del Guerrero</div>
+    <div class="stats-panel">
+      <div class="stat-row"><span>Total de cartas</span><span id="s-total">0</span></div>
+      <div class="stat-row"><span>Combates totales</span><span id="s-reviews">0</span></div>
+      <div class="stat-row"><span>Precisión global</span><span id="s-acc">—</span></div>
+      <div class="stat-row"><span>Mejor racha</span><span id="s-streak">0 🔥</span></div>
+      <div class="stat-row"><span>Cartas dominadas</span><span id="s-mastered">0</span></div>
+      <div class="stat-row"><span>Victorias (≥90%)</span><span id="s-wins">0</span></div>
+      <div class="stat-row"><span>Empates (50-89%)</span><span id="s-draws">0</span></div>
+      <div class="stat-row"><span>Derrotas (&lt;50%)</span><span id="s-losses">0</span></div>
+    </div>
+    <button id="reset-btn" class="danger-btn">Borrar todo el progreso</button>
+  </section>
+
+</div>
+
+<div id="toast"></div>
+
+<!-- ══ Scripts ══ -->
+<script src="js/srs.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/modManager.js"></script>
+<script src="js/battle.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/cinematic.js"></script>
+<script src="js/app.js"></script>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
+</body>
+</html>
