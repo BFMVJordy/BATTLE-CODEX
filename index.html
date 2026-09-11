@@ -6,6 +6,23 @@
 <title>Codex Battle</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
+<style>
+  #download-drive-btn{
+    background: rgba(10,12,20,0.85);
+    color: #e9c976;
+    border: 1px solid #b9922f;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #download-drive-btn:hover{
+    background: rgba(185,146,47,0.25);
+  }
+</style>
 </head>
 <body>
 
@@ -55,6 +72,7 @@
     <button class="nav-btn" data-view="mazos">Mazos</button>
     <button class="nav-btn" data-view="deck">Cartas</button>
     <button class="nav-btn" data-view="stats">Stats</button>
+    <button id="download-drive-btn" type="button" onclick="window.open('https://drive.google.com/drive/folders/1dmIJ5RmGipMxTulH8Cp5DxO_Ztd_CfkN?usp=drive_link', '_blank')">⬇ Descargar</button>
   </nav>
 
   <!-- ══════════ INICIO (main menu) ══════════ -->
