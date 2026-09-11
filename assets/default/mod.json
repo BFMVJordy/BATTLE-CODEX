@@ -1,0 +1,64 @@
+{
+  "id": "default",
+  "name": "Default",
+  "description": "Mod base sin assets. Copiá esta carpeta para crear tu propio mod (Skyrim, DBZ, Saint Seiya, etc).",
+
+  "pageBg": {
+    "inicio": { "type": "video", "src": "bg/inicio.mp4" },
+    "mazos":  { "type": "video", "src": "bg/mazos.mp4" },
+    "deck":   { "type": "video", "src": "bg/deck.mp4" },
+    "mods":   { "type": "video", "src": "bg/mods.mp4" },
+    "stats":  { "type": "video", "src": "bg/stats.mp4" }
+  },
+
+  "player": {
+    "name": "GUERRERO",
+    "idle":  { "type": "video", "src": "battle/reposo.mp4" },
+    "good":  { "type": "video", "src": "battle/bien.mp4" },
+    "easy":  { "type": "video", "src": "battle/facil.mp4" },
+    "hard":  { "type": "video", "src": "battle/dificil.mp4" },
+    "again": { "type": "video", "src": "battle/otravez.mp4" }
+  },
+
+  "enemy": {
+    "name": "DRAGÓN",
+    "idle":  { "type": "video", "src": "battle/reposo.mp4" },
+    "good":  { "type": "video", "src": "battle/bien.mp4" },
+    "easy":  { "type": "video", "src": "battle/facil.mp4" },
+    "hard":  { "type": "video", "src": "battle/dificil.mp4" },
+    "again": { "type": "video", "src": "battle/otravez.mp4" }
+  },
+
+  "arena": {
+    "type": "video",
+    "src": "arena/bg.mp4"
+  },
+
+  "combatText": {
+    "good":  ["¡Golpe!", "¡Impacto directo!"],
+    "easy":  ["¡Golpe especial!", "¡Poder máximo!"],
+    "hard":  ["¡Mordida!", "¡El dragón ataca!"],
+    "again": ["¡Fuego!", "¡Llamas!"]
+  },
+
+  "endings": {
+    "victory": {
+      "type": "video",
+      "src": "endings/victory.mp4",
+      "title": "VICTORIA — EL DRAGÓN HA CAÍDO",
+      "subtitle": "Tu conocimiento forjó la leyenda."
+    },
+    "draw": {
+      "type": "video",
+      "src": "endings/draw.mp4",
+      "title": "ME DAS LÁSTIMA, MORTAL...",
+      "subtitle": "Sigue entrenando. Te falta nivel."
+    },
+    "defeat": {
+      "type": "video",
+      "src": "endings/defeat.mp4",
+      "title": "DERROTA — DECAPITADO",
+      "subtitle": "Tu ignorancia fue tu condena."
+    }
+  }
+}
