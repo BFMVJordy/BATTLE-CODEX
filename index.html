@@ -6,23 +6,6 @@
 <title>Codex Battle</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
-<style>
-  #download-drive-btn{
-    background: rgba(10,12,20,0.85);
-    color: #e9c976;
-    border: 1px solid #b9922f;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 0.85em;
-    padding: 8px 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  #download-drive-btn:hover{
-    background: rgba(185,146,47,0.25);
-  }
-</style>
 </head>
 <body>
 
@@ -72,7 +55,6 @@
     <button class="nav-btn" data-view="mazos">Mazos</button>
     <button class="nav-btn" data-view="deck">Cartas</button>
     <button class="nav-btn" data-view="stats">Stats</button>
-    <button id="download-drive-btn" type="button" onclick="window.open('https://drive.google.com/drive/folders/1dmIJ5RmGipMxTulH8Cp5DxO_Ztd_CfkN?usp=drive_link', '_blank')">⬇ Descargar</button>
   </nav>
 
   <!-- ══════════ INICIO (main menu) ══════════ -->
@@ -226,10 +208,11 @@
     <div class="section-title">Crónicas del Guerrero</div>
     <div class="stats-panel">
       <div class="stat-row"><span>Total de cartas</span><span id="s-total">0</span></div>
-      <div class="stat-row"><span>Combates totales</span><span id="s-reviews">0</span></div>
+      <div class="stat-row"><span>Combates</span><span id="s-combats">0</span></div>
+      <div class="stat-row"><span>Cartas respondidas</span><span id="s-reviews">0</span></div>
       <div class="stat-row"><span>Precisión global</span><span id="s-acc">—</span></div>
       <div class="stat-row"><span>Mejor racha</span><span id="s-streak">0 🔥</span></div>
-      <div class="stat-row"><span>Cartas dominadas</span><span id="s-mastered">0</span></div>
+      <div class="stat-row"><span>Cartas dominadas (≥ 21 días)</span><span id="s-mastered">0</span></div>
       <div class="stat-row"><span>Victorias (≥90%)</span><span id="s-wins">0</span></div>
       <div class="stat-row"><span>Empates (50-89%)</span><span id="s-draws">0</span></div>
       <div class="stat-row"><span>Derrotas (&lt;50%)</span><span id="s-losses">0</span></div>
@@ -237,6 +220,19 @@
     <button id="reset-btn" class="danger-btn">Borrar todo el progreso</button>
   </section>
 
+</div>
+
+<!-- ══════════ CONFIRM DIALOG ══════════ -->
+<div id="confirm-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+  <div id="confirm-box">
+    <div id="confirm-icon">⚔️</div>
+    <div id="confirm-title"></div>
+    <p id="confirm-message"></p>
+    <div id="confirm-btns">
+      <button id="confirm-cancel">Cancelar</button>
+      <button id="confirm-ok">Aceptar</button>
+    </div>
+  </div>
 </div>
 
 <div id="toast"></div>
@@ -249,6 +245,6 @@
 <script src="js/deck.js"></script>
 <script src="js/cinematic.js"></script>
 <script src="js/app.js"></script>
-<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
+<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});</script>
 </body>
 </html>
