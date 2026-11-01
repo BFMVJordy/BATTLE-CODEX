@@ -12,7 +12,9 @@
  */
 
 const Cinematic = {
-  show(session) {
+  _shown: null,
+
+  show(session, isRepaso = false) {
     const { total, correct } = session;
     if (total === 0) return;
     const pct = correct / total;
@@ -22,12 +24,16 @@ const Cinematic = {
     else if (pct >= 0.5) type = 'draw';
     else type = 'defeat';
 
-    // Update persisted stats
-    const state = window.AppState;
-    if (type === 'victory') state.wins++;
-    else if (type === 'draw') state.draws++;
-    else state.losses++;
-    saveState(state);
+    this._shown = { total, correct };
+
+    // Update persisted stats (el repaso es práctica: no cuenta en las estadísticas)
+    if (!isRepaso) {
+      const state = window.AppState;
+      if (type === 'victory') state.wins++;
+      else if (type === 'draw') state.draws++;
+      else state.losses++;
+      saveState(state);
+    }
 
     const ending = ModManager.getEnding(type) || {};
 
@@ -88,7 +94,9 @@ const Cinematic = {
   close() {
     const overlay = document.getElementById('cinematic');
     const videoEl = document.getElementById('cinematic-video');
+    if (overlay.classList.contains('hidden')) return;   // evita abrir el repaso dos veces
     overlay.classList.add('hidden');
+    videoEl.onended = null;
     videoEl.pause();
 
     document.getElementById('cinematic-score').style.opacity = '0';
@@ -96,6 +104,6 @@ const Cinematic = {
     document.getElementById('cinematic-subtitle').style.opacity = '0';
 
     // Show the repaso dialog instead of jumping straight into battle
-    showRepasoDialog();
+    showRepasoDialog(this._shown);
   },
 };
